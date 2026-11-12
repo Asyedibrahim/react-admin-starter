@@ -1,20 +1,21 @@
 # React Admin Dashboard Starter
 
-A modern, responsive, and customizable admin dashboard starter built with **React, TypeScript, Tailwind CSS, Framer motion and Redux Toolkit**.
+A modern, responsive, and customizable admin dashboard starter built with **React, TypeScript, Tailwind CSS, Framer Motion, and Redux Toolkit**.
 
-This project provides a reusable foundation for building admin panels and management systems. It includes authentication, protected layouts, reusable navigation components, responsive sidebars, and a clean light-themed interface.
+This project provides a reusable frontend foundation for building admin panels, management systems, and web applications. It includes authentication UI, protected route handling, reusable navigation components, responsive sidebars, and a clean light-themed interface.
 
 ## Features
 
-- **Modern UI:** Clean and responsive light-themed design.
+- **Modern UI:** Clean, responsive, and light-themed design.
 - **Authentication:** Login functionality with Redux state management.
-- **Registration Navigation:** Configurable registration page navigation.
-- **Protected Routes:** Support for authenticated dashboard pages.
+- **Registration Navigation:** Configurable navigation to the registration page.
+- **Protected Routes:** Private route handling for authenticated pages.
 - **Responsive Sidebar:** Separate desktop and mobile navigation layouts.
-- **Dynamic Header:** Page title based on the current route.
-- **Custom Branding:** Configure application name, logo, and navigation.
+- **Dynamic Header:** Automatically displays the current page title.
+- **Custom Branding:** Configurable application name, logo, and navigation.
 - **State Management:** Redux Toolkit with Redux Persist support.
 - **API Integration:** Centralized Axios configuration.
+- **Alert Dialogs:** Reusable confirmation dialogs.
 - **Notifications:** Toast notifications using React Hot Toast.
 - **Animations:** Smooth transitions using Framer Motion.
 - **Icons:** React Icons integration.
@@ -22,31 +23,31 @@ This project provides a reusable foundation for building admin panels and manage
 
 ## Tech Stack
 
-| Technology       | Purpose                |
-| ---------------- | ---------------------- |
-| React            | Frontend library       |
-| TypeScript       | Type safety            |
-| Tailwind CSS     | Styling                |
-| React Router DOM | Routing                |
-| Redux Toolkit    | State management       |
-| Redux Persist    | Persistent Redux state |
-| Axios            | API requests           |
-| Framer Motion    | Animations             |
-| React Hot Toast  | Notifications          |
-| React Icons      | Icons                  |
+| Technology | Purpose |
+|---|---|
+| React | Frontend library |
+| TypeScript | Type safety |
+| Tailwind CSS | Styling |
+| React Router DOM | Routing |
+| Redux Toolkit | State management |
+| Redux Persist | Persistent Redux state |
+| Axios | API requests |
+| Framer Motion | Animations |
+| React Hot Toast | Notifications |
+| React Icons | Icons |
 
 ## Getting Started
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+git clone https://github.com/Asyedibrahim/react-admin-starter.git
 ```
 
 ### 2. Navigate to the Project
 
 ```bash
-cd YOUR_REPOSITORY
+cd react-admin-starter
 ```
 
 ### 3. Install Dependencies
@@ -55,30 +56,7 @@ cd YOUR_REPOSITORY
 npm install
 ```
 
-### 4. Configure Environment Variables
-
-Create a `.env` file in the project root.
-
-```env
-VITE_API_URL=http://localhost:5000/api
-```
-
-Replace the URL with your backend API URL.
-
-Make sure your Axios configuration uses the environment variable:
-
-```typescript
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true,
-});
-
-export default api;
-```
-
-### 5. Start the Development Server
+### 4. Start the Development Server
 
 ```bash
 npm run dev
@@ -87,8 +65,6 @@ npm run dev
 Open the local URL displayed in your terminal.
 
 ## Project Structure
-
-The following is a suggested structure for organizing the project:
 
 ```text
 src/
@@ -126,8 +102,6 @@ src/
 └── main.tsx
 ```
 
-Your actual project structure may differ depending on your implementation.
-
 ## Customization
 
 ### 1. Application Name and Logo
@@ -136,64 +110,95 @@ The login component supports custom branding through props.
 
 ```tsx
 <Login
-  appName="My Admin"
-  logo="/logo.png"
-  redirectPath="/dashboard"
-  registerPath="/register"
+    appName="My Admin"
+    logo="/logo.png"
+    redirectPath="/dashboard"
+    registerPath="/register"
 />
 ```
 
-| Prop           | Description                  |
-| -------------- | ---------------------------- |
-| `appName`      | Application name             |
-| `logo`         | Application logo path        |
+| Prop | Description |
+|---|---|
+| `appName` | Application name |
+| `logo` | Application logo path |
 | `redirectPath` | Route after successful login |
-| `registerPath` | Registration page route      |
+| `registerPath` | Registration page route |
+
+You can also customize the application name, logo, and navigation in the sidebar components.
 
 ### 2. Sidebar Navigation
 
-You can customize the sidebar navigation by passing your own navigation configuration.
-
-Example:
+Customize the sidebar by passing your own navigation configuration.
 
 ```tsx
+import {
+    FiGrid,
+    FiUsers,
+    FiSettings,
+} from "react-icons/fi";
+
 const navigation = [
-  {
-    title: "Main Menu",
-    items: [
-      {
-        name: "Dashboard",
-        path: "/dashboard",
-        icon: DashboardIcon,
-      },
-      {
-        name: "Users",
-        path: "/users",
-        icon: UsersIcon,
-      },
-      {
-        name: "Settings",
-        path: "/settings",
-        icon: SettingsIcon,
-      },
-    ],
-  },
+    {
+        title: "Main Menu",
+        items: [
+            {
+                name: "Dashboard",
+                path: "/dashboard",
+                icon: FiGrid,
+            },
+            {
+                name: "Users",
+                path: "/users",
+                icon: FiUsers,
+            },
+            {
+                name: "Settings",
+                path: "/settings",
+                icon: FiSettings,
+            },
+        ],
+    },
 ];
 ```
 
 Pass the configuration to the sidebar:
 
 ```tsx
-<Sidebar appName="My Admin" logo="/logo.png" navigation={navigation} />
+<Sidebar
+    appName="My Admin"
+    logo="/logo.png"
+    navigation={navigation}
+/>
 ```
 
 Use the same navigation configuration for the mobile sidebar to keep both menus synchronized.
 
 ### 3. API Configuration
 
-Configure your backend URL through the `.env` file.
+This is a frontend-only starter template. It does not include a backend server or environment configuration.
 
-Authentication requests use the following endpoint:
+To connect your own backend, update:
+
+`src/config/axios.ts`
+
+Example:
+
+```typescript
+import axios from "axios";
+
+const api = axios.create({
+    baseURL: "http://localhost:5000/api",
+    withCredentials: true,
+});
+
+export default api;
+```
+
+Replace the `baseURL` with your own backend API URL.
+
+#### Authentication API
+
+The login component currently uses:
 
 ```http
 POST /auth/login
@@ -203,52 +208,59 @@ Example request:
 
 ```json
 {
-  "email": "user@example.com",
-  "password": "your-password"
+    "email": "user@example.com",
+    "password": "your-password"
 }
 ```
 
-The login component expects a response compatible with your Redux `signInSuccess` action.
+The login component expects a response compatible with the Redux `signInSuccess` action.
 
-Adapt the API endpoint and response handling to match your backend implementation.
+You can modify the API endpoints, request data, and response handling according to your backend implementation.
+
+**Note:** The frontend provides the authentication interface and Redux integration. Actual authentication requires your own backend API.
 
 ### 4. Routing
 
-Configure your application routes using React Router.
+The project uses React Router DOM for navigation.
 
-Example:
+Example route configuration:
 
 ```tsx
 import { Routes, Route } from "react-router-dom";
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 
 function AppRoutes() {
-  return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-    </Routes>
-  );
+    return (
+        <Routes>
+            <Route path="/login" element={<Login />} />
+
+            <Route path="/register" element={<Register />} />
+
+            <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+    );
 }
 
 export default AppRoutes;
 ```
 
-Add your protected route logic to prevent unauthorized access to dashboard pages.
+Use the provided private route component to protect dashboard pages.
+
+You can add, remove, or modify routes based on your application requirements.
 
 ## Available Scripts
 
-| Command           | Description                      |
-| ----------------- | -------------------------------- |
-| `npm run dev`     | Start the development server     |
-| `npm run build`   | Build the production application |
-| `npm run preview` | Preview the production build     |
-| `npm run lint`    | Run ESLint, if configured        |
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the development server |
+| `npm run build` | Build the production application |
+| `npm run preview` | Preview the production build |
+| `npm run lint` | Run ESLint, if configured |
 
-Check your `package.json` for the scripts available in your project.
+Check `package.json` for the scripts available in your project.
 
 ## Production Build
 
@@ -260,31 +272,55 @@ npm run build
 
 The generated production files will be available in the `dist/` directory when using Vite.
 
-You can deploy the `dist/` folder to services such as:
+You can deploy the production build to:
 
 - Vercel
 - Netlify
 - Cloudflare Pages
 - Any static hosting provider
 
-## Backend Requirements
+## Backend Integration
 
-This is a frontend starter template. It does not include a backend implementation.
+This repository includes both frontend and backend implementations.
 
-To enable authentication and dynamic data, connect your own backend API.
+The backend is built with Node.js, Express.js, and MongoDB. It provides API endpoints for authentication and other application features.
 
-You will need to implement:
+### Backend Environment Variables
 
-- User registration
-- User login
-- User logout
-- Authentication and authorization
-- Protected API endpoints
-- User profile management
+Create a `.env` file in the backend root directory (the same level as `package.json`).
+
+```env
+MONGO=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+```
+
+| Variable | Description |
+|---|---|
+| `MONGO` | MongoDB connection string |
+| `JWT_SECRET` | Secret key used for JWT authentication |
+
+### Backend Setup
+
+1. Navigate to the backend directory.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create the `.env` file and configure the required variables.
+4. Start the backend server using the available npm script.
+
+### Security
+
+- Never commit your actual `.env` file.
+- Add `.env` to `.gitignore`.
+- Use `.env.example` with placeholder values to document required variables.
+- Never expose database credentials or JWT secrets in frontend code.
 
 ## Contributing
 
 Contributions are welcome!
+
+If you would like to improve this project:
 
 1. Fork this repository.
 2. Create a new branch.
@@ -294,4 +330,4 @@ Contributions are welcome!
 
 ---
 
-**Built with React, TypeScript, Tailwind CSS and Framer motion.**
+**Built with React, TypeScript, Tailwind CSS, Framer Motion, and Redux Toolkit.**
